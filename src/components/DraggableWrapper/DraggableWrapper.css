@@ -1,0 +1,94 @@
+.draggable-wrapper {
+  border: 2px dashed transparent;
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.2s ease;
+  min-width: 200px;
+  min-height: 100px;
+}
+
+.draggable-wrapper:hover {
+  border-color: #007bff;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+}
+
+.draggable-wrapper.dragging {
+  border-color: #007bff;
+  box-shadow: 0 8px 24px rgba(0, 123, 255, 0.3);
+  transform: scale(1.02);
+  z-index: 1000;
+}
+
+.drag-handle {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 24px;
+  height: 24px;
+  background: #007bff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.draggable-wrapper:hover .drag-handle {
+  opacity: 1;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.drag-dots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  width: 12px;
+  height: 12px;
+}
+
+.drag-dots span {
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+}
+
+.component-content {
+  pointer-events: none;
+  position: relative;
+}
+
+.draggable-wrapper.dragging .component-content {
+  pointer-events: none;
+}
+
+.draggable-wrapper:not(.dragging) .component-content {
+  pointer-events: auto;
+}
+
+/* Grid overlay for positioning */
+.grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(to right, rgba(0, 123, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 123, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.grid-overlay.active {
+  opacity: 1;
+}

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src/SimpleHero.tsx",
+    "src/index.tsx",
+    "src/index.css",
+    "src/react-app-env.d.ts"
+  ],
+  "exclude": [
+    "src/Editor/**",
+    "src/react-scenejs-editor/**",
+    "src/components/**",
+    "src/App.tsx",
+    "src/DragDropDemo.tsx"
+  ]
+}

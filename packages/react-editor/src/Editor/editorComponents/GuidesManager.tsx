@@ -42,7 +42,7 @@ export const GuidesManager = React.forwardRef<Guides, GuidesManagerProps>((props
     } else {
         selectedRanges = [
             isHorizontal
-                ? [0, 600]
+                ? [0, 1200]
                 : [0, 800],
         ];
     }

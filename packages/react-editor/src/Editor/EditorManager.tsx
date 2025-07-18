@@ -448,7 +448,7 @@ export default function EditorManager2() {
                     <InfiniteViewerManager ref={infiniteViewerRef}>
                         <Viewport ref={viewportRef} onBlur={onBlur}
                             style={{
-                                width: `600px`,
+                                width: `1200px`,
                                 height: `800px`,
                             }}>
                             <MoveableManager ref={moveableRef} />
