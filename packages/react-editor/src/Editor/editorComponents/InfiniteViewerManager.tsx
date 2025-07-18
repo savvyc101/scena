@@ -5,9 +5,10 @@ import { $space } from "../stores/keys";
 import {
     $actionManager, $horizontalGuides, $layerManager, $moveable,
     $scrollPos,
-    $selectedLayers, $selecto, $verticalGuides, $zoom,
+    $selectedLayers, $selecto, $verticalGuides, $zoom, $selectedTool, $editor,
 } from "../stores/stores";
 import { prefix } from "../utils/utils";
+import { createLayer } from "../managers/LayerManager";
 
 export interface InfiniteViewerManagerProps {
     children: React.ReactNode;
@@ -20,8 +21,11 @@ export const InfiniteViewerManager = React.forwardRef<InfiniteViewer, InfiniteVi
     const actionManager = useStoreStateValue($actionManager);
     const layerManager = useStoreStateValue($layerManager);
     const selectedLayersStore = useStoreValue($selectedLayers);
+    const selectedTool = useStoreStateValue($selectedTool);
+    const editorRef = useStoreStateValue($editor);
 
     const isSpace = useStoreStateValue($space);
+    const zoom = useStoreStateValue($zoom);
     const setZoom = useStoreStateSetValue($zoom);
     const setScrollPos = useStoreStateSetValue($scrollPos);
 
@@ -54,7 +58,55 @@ export const InfiniteViewerManager = React.forwardRef<InfiniteViewer, InfiniteVi
         }}
         onDragEnd={e => {
             if (!e.isDrag) {
-                selectoRef.current!.clickTarget(e.inputEvent);
+                // Check if text tool is selected and clicked on empty space
+                if (selectedTool === "text" && !e.inputEvent.target.closest('.scena-element')) {
+                    const infiniteViewer = ref as React.MutableRefObject<InfiniteViewer>;
+                    const viewportElement = infiniteViewer.current!.getViewport();
+                    const { left, top } = viewportElement.getBoundingClientRect();
+                    const currentZoom = zoom;
+                    const { clientX, clientY } = e.inputEvent;
+                    const offsetPosition = [
+                        (clientX - left) / currentZoom,
+                        (clientY - top) / currentZoom,
+                    ];
+                    
+                    // Create a new text layer
+                    const newTextLayer = createLayer({
+                        title: "Text",
+                        style: {
+                            position: "absolute",
+                            left: `${offsetPosition[0]}px`,
+                            top: `${offsetPosition[1]}px`,
+                            fontSize: "16px",
+                            fontFamily: "Arial, sans-serif",
+                            color: "#000000",
+                            cursor: "text",
+                            minWidth: "100px",
+                            minHeight: "20px",
+                        },
+                        jsx: <div 
+                            contentEditable={true}
+                            suppressContentEditableWarning={true}
+                            style={{
+                                outline: 'none',
+                                cursor: 'text',
+                            }}
+                        >
+                            Click to edit text
+                        </div>,
+                    });
+                    
+                    // Add the new text layer to the editor
+                    const currentLayers = layerManager.layers;
+                    editorRef.current!.changeLayers([...currentLayers, newTextLayer]);
+                    
+                    // Select the new text layer
+                    setTimeout(() => {
+                        editorRef.current!.setSelectedLayers([newTextLayer]);
+                    }, 100);
+                } else {
+                    selectoRef.current!.clickTarget(e.inputEvent);
+                }
             }
         }}
         onAbortPinch={e => {

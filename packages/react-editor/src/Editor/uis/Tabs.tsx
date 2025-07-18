@@ -8,6 +8,7 @@ import HistoryTab from "./tabs/HistoryTab";
 import LayersTab from "./tabs/LayersTab";
 import TransformTab from "./tabs/TransformTab";
 import BorderTab from "./tabs/BorderTab";
+import FontTab from "./tabs/FontTab";
 
 const TabsElement = styled("div", `
 {
@@ -68,6 +69,10 @@ export const TABS: Record<string, () => React.ReactElement> = {
     history: () => <div className={prefix("tab")}>
         <h2>History</h2>
         <HistoryTab />
+    </div>,
+    font: () => <div className={prefix("tab")}>
+        <h2>Font</h2>
+        <FontTab />
     </div>,
 };
 

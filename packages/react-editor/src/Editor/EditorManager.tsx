@@ -174,7 +174,14 @@ export default function EditorManager2() {
                     fontSize: "30px",
                     fontWeight: "bold",
                 },
-                jsx: <div>
+                jsx: <div 
+                    contentEditable={true}
+                    suppressContentEditableWarning={true}
+                    style={{
+                        outline: 'none',
+                        cursor: 'text',
+                    }}
+                >
                     Everything in the editor,<br />
                     Tools, Animations, and Viewers,<br />
                     All with Open Source.<br />
@@ -383,6 +390,7 @@ export default function EditorManager2() {
     const rightTabs = React.useMemo(() => [
         "align",
         "transform",
+        "font",
         "fill",
         "stroke",
         "frame",

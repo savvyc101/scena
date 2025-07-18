@@ -45,12 +45,19 @@ export const SVGText = React.forwardRef<SVGSVGElement, SVGTextProps>((props, ref
             alignmentBaseline: "hanging",
         }}>sign in</text>
         <foreignObject x="0" y={baselineOffset} width={width} height={height - baselineOffset} >
-            <div style={{
-                lineHeight: `${defaultLineHeight}px`,
-                ...style,
-            }} dangerouslySetInnerHTML={{
-                __html: text.replace(/[\r\n]/g, "<br />"),
-            }}></div>
+            <div 
+                contentEditable={true}
+                suppressContentEditableWarning={true}
+                style={{
+                    lineHeight: `${defaultLineHeight}px`,
+                    outline: 'none',
+                    cursor: 'text',
+                    ...style,
+                }} 
+                dangerouslySetInnerHTML={{
+                    __html: text.replace(/[\r\n]/g, "<br />"),
+                }}
+            ></div>
         </foreignObject>
     </svg>;
 });
